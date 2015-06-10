@@ -45,14 +45,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	// Update this code block to match the style of the previous block
 
 	{
-		std::vector<Vector2> p;
+		std::vector<Vector2> movePath;
 
-		std::mt19937 mt;
-		float mtr = static_cast<float>(mt.max() - mt.min());
+		std::mt19937 merTwister;
+		float merTwisterRange = static_cast<float>(merTwister.max() - merTwister.min());
 
 		for (int i = 0; i < 10; ++i)
 		{
-			p.push_back(Vector2((mt() / mtr) - 0.5f, (mt() / mtr) - 0.5f));
+			movePath.push_back(Vector2(
+				(merTwister() / merTwisterRange) - 0.5f,
+				(merTwister() / merTwisterRange) - 0.5f));
 		}
 
 		bool a = true;
@@ -60,9 +62,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			a = false;
 
-			for (std::vector<Vector2>::iterator i = p.begin(); i != p.end(); ++i) 
+			for (std::vector<Vector2>::iterator i = movePath.begin(); i != movePath.end(); ++i)
 			{
-				if ((i + 1) == p.end())
+				if ((i + 1) == movePath.end())
 					continue;
 
 				if ((*i).MagnitudeSquared() > (*(i + 1)).MagnitudeSquared())
@@ -74,7 +76,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			}
 		}
 
-		std::for_each(p.begin(), p.end(), [](const Vector2& v) {
+		std::for_each(movePath.begin(), movePath.end(), [](const Vector2& v) {
 			std::cout << "(" << v.x << ", " << v.y << ") : " << std::endl;
 			std::cout << "   Magnitude: " << v.Magnitude() << std::endl;
 		});
